@@ -2,6 +2,7 @@ pipeline {
      environment {
        IMAGE_NAME = "alpinehelloworld"
        IMAGE_TAG = "latest"
+       PORT = 5000
      }
      agent none
      stages {
@@ -18,7 +19,7 @@ pipeline {
             steps {
                script {
                  sh '''
-                    docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT=5000 ari19922_$IMAGE_NAME:$IMAGE_TAG
+                    docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT= $PORT ari19922_$IMAGE_NAME:$IMAGE_TAG
                     sleep 5
                  '''
                }
