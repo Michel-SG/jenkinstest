@@ -1,4 +1,7 @@
 ## Documentation
+### plugins
+    Installer badge et slack
+    Mettre en place un webhook
 
 An Jenkins-based Docker example
 
