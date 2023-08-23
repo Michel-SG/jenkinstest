@@ -1,6 +1,6 @@
 /*Import share Library */
+@Library("michel-share-library")_
 
-@Library("michel-share-library")
 pipeline {
      environment {
        IMAGE_NAME = "alpinehelloworld"
@@ -47,7 +47,7 @@ pipeline {
                  docker rm -f $IMAGE_NAME
                '''
              }
-          }
+        }
      }
      
   }
