@@ -14,7 +14,8 @@ node {
     stage('Run docker') {
         sh 'docker build -t myapp .'
     }
-    stage('See docker images') {
-        sh 'docker images'
+    stage('Run Trivy') {
+        sh 'trivy image myapp'
     }
+
 }
