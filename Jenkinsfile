@@ -11,4 +11,7 @@ node {
     stage('Run') {
         sh 'java Main'
     }
+    stage('Run docker') {
+        sh 'docker ps'
+    }
 }
