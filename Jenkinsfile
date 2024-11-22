@@ -12,6 +12,9 @@ node {
         sh 'java Main'
     }
     stage('Run docker') {
-        sh 'docker ps'
+        sh 'docker build -t myapp'
+    }
+    stage('See docker images') {
+        sh 'docker images'
     }
 }
