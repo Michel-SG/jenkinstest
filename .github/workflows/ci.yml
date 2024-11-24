@@ -17,4 +17,4 @@ jobs:
       uses: canastro/copy-file-action@master
       with:
         source: "Main.java"
-        target: "files/main.java"
+        target: "appfiles/main.java"
