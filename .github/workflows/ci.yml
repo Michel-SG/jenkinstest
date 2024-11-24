@@ -18,3 +18,8 @@ jobs:
       with:
         source: "Main.java"
         target: "appfiles/main.java"
+    - name: run tests
+      run: |
+        cd "appfiles"
+        ls
+        cat main.java
