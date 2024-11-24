@@ -28,3 +28,13 @@ jobs:
         super_secret: ${{ secrets.SUPERSECRET }}
       run: |
         echo "$super_secret"
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-node
+      with:
+        path: ./
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Dockerfile') }}
+        restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
