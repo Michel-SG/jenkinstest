@@ -28,8 +28,9 @@ jobs:
         super_secret: ${{ secrets.SUPERSECRET }}
         user_secret: ${{ secrets.GITHUB_USER }}
       run: |
-        echo "$super_secret"
-        echo "$user_secret"
+        echo $super_secret
+        echo $user_secret
+        set | grep $user_secret
 
     - name: Cache node modules
       uses: actions/cache@v3
