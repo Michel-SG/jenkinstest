@@ -28,8 +28,8 @@ jobs:
         super_secret: ${{ secrets.SUPERSECRET }}
         user_secret: ${{ secrets.GITHUB_USER }}
       run: |
-        echo ${{super_secret}}
-        echo ${{user_secret}}
+        echo $super_secret
+        echo $user_secret
         echo ${{github.event_name}}
         echo "ref name :" ${{github.ref_name}}
         echo "sha :" ${{github.sha}}
