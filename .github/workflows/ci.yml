@@ -30,8 +30,8 @@ jobs:
       run: |
         echo $super_secret
         echo $github.event_name
-        echo "ref name :" ${{ref_name}}
-        echo "sha :" $sha
+        echo "ref name :" ${{github.ref_name}}
+        echo "sha :" $github.sha
         echo $GITHUB_SERVER_URL
 
     - name: Cache node modules
