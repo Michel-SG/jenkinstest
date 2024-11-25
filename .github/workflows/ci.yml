@@ -33,7 +33,7 @@ jobs:
         echo ${{github.event_name}}
         echo "ref name :" ${{github.ref_name}}
         echo "sha :" ${{github.sha}}
-        echo $GITHUB_SERVER_URL
+        echo "repository : " ${{github.repository}}
 
     - name: Cache node modules
       uses: actions/cache@v3
