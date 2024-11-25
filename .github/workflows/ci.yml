@@ -30,7 +30,6 @@ jobs:
       run: |
         echo $super_secret
         echo $user_secret
-        set | grep $user_secret
 
     - name: Cache node modules
       uses: actions/cache@v3
