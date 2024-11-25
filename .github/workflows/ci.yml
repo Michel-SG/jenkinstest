@@ -26,6 +26,7 @@ jobs:
     - name: Retrieve secret
       env:
         super_secret: ${{ secrets.SUPERSECRET }}
+        user_secret: ${{ secrets.GITHUB_USER }}
       run: |
         echo "$super_secret"
 
