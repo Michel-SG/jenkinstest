@@ -28,10 +28,11 @@ jobs:
         super_secret: ${{ secrets.SUPERSECRET }}
         user_secret: ${{ secrets.GITHUB_USER }}
       run: |
-        echo $super_secret
-        echo $github.event_name
+        echo ${{super_secret}}
+        echo ${{user_secret}}
+        echo ${{github.event_name}}
         echo "ref name :" ${{github.ref_name}}
-        echo "sha :" $github.sha
+        echo "sha :" ${{github.sha}}
         echo $GITHUB_SERVER_URL
 
     - name: Cache node modules
