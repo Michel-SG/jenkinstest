@@ -30,6 +30,8 @@ jobs:
       run: |
         echo $super_secret
         echo $user_secret
+        echo $GITHUB_REPOSITORY
+        echo $GITHUB_USER
 
     - name: Cache node modules
       uses: actions/cache@v3
