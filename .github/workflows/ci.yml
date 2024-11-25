@@ -34,6 +34,7 @@ jobs:
         echo "ref name :" ${{github.ref_name}}
         echo "sha :" ${{github.sha}}
         echo "repository : " ${{github.repository}}
+        echo $GITHUB_BASE_REF
 
     - name: Cache node modules
       uses: actions/cache@v3
