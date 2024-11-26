@@ -18,7 +18,7 @@ jobs:
           echo "${{github.workspace}}"
       - name: Hello world action step
 
-        uses: ${{github.workspace}}/.github/actions/firstaction
+        uses: .//.github/actions/firstaction
         id: hello
         with:
           who-to-greet: 'Michel'
