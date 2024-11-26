@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Hello world action step
         id: hello
-        uses: app.yml
+        uses: .app
         with:
           who-to-greet: 'Michel'
       # Use the output from the `hello` step
