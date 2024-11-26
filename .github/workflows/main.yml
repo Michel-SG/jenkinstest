@@ -11,8 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Hello world action step
-        id: hello
+
         uses: ./.github/actions/firstaction
+        id: hello
         with:
           who-to-greet: 'Michel'
       # Use the output from the `hello` step
