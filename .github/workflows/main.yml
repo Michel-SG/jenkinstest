@@ -11,7 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: pwd
-        run: pwd
+        run: |
+          pwd
+          ls
       - name: Hello world action step
 
         uses: ./.github/actions/firstaction
