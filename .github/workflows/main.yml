@@ -22,5 +22,5 @@ jobs:
     uses: ./.github/workflows/workflow1.yml
     with:
       who-to-greet: hello
-    secrets:
-      personal_access_token: salut
+    # secrets:
+    #   personal_access_token: salut

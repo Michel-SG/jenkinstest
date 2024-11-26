@@ -7,9 +7,9 @@ on:
         required: true
         type: string
         default: 'World'
-    secrets:
-      token:
-        required: true
+    # secrets:
+    #   token:
+    #     required: true
 
 jobs:
   triage:
