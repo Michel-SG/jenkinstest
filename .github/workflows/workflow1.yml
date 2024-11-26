@@ -15,7 +15,11 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: ${{ secrets.token }}
-        configuration: ${{ inputs.who-to-greet }}
+    # - uses: actions/labeler@v4
+    #   with:
+    #     repo-token: ${{ secrets.token }}
+    #     configuration: ${{ inputs.who-to-greet }}
+      - name: Get the output time
+        run: echo "The time was ${{ inputs.who-to-greet }}"
+
+
