@@ -13,7 +13,8 @@ jobs:
       - name: pwd
         run: |
           pwd
-          ls
+          ls -a
+          ls .github/
       - name: Hello world action step
 
         uses: ./.github/actions/firstaction
