@@ -15,9 +15,10 @@ jobs:
           pwd
           ls -a
           ls .github/
+          cd .github/
       - name: Hello world action step
 
-        uses: ./.github/actions/firstaction
+        uses: ./github/actions/firstaction
         id: hello
         with:
           who-to-greet: 'Michel'
