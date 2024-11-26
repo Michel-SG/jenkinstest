@@ -7,9 +7,9 @@ on:
         required: true
         type: string
         default: 'World'
-    secrets:
-      token:
-        required: true
+    outputs:
+      datato: # id of output
+        description: 'The time we greeted you'
 
 jobs:
   triage:

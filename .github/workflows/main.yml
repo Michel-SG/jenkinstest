@@ -23,5 +23,4 @@ jobs:
     uses: ./.github/workflows/workflow1.yml
     with:
       who-to-greet: 'Michel'
-    secrets:
-      personal_access_token: "hello"
+      datato: "hello"
