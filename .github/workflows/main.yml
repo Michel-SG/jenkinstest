@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: Michel-SG/JenkinsTest/action.yml@develop
+        uses: JenkinsTest/action@develop
         with:
           who-to-greet: 'Michel'
       # Use the output from the `hello` step
