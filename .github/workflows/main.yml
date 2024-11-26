@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Hello world action step
+      - name: pwd
         run: pwd
       - name: Hello world action step
 
