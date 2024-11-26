@@ -2,10 +2,10 @@ name: copy files
 on: 
   push:
     branches:
-    - main
+    - hello
   pull_request:
     branches:
-    - main
+    - hello
 jobs:
 
   build:
