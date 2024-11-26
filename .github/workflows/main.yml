@@ -18,9 +18,9 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
-
-  call-workflow-passing-data:
-    uses: ./.github/workflows/workflow1.yml
-    with:
-      who-to-greet: 'Michel'
-      datato: "hello"
+      - name: reusable
+        id: salut
+        uses: ./.github/workflows/workflow1.yml
+        with:
+          who-to-greet: 'Michel'
+          datato: "hello"
