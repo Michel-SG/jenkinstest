@@ -4,23 +4,23 @@ on:
     - reusable
 
 jobs:
-  hello_world_job:
-    runs-on: ubuntu-latest
-    name: A job to say hello
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Hello world action step
-        id: hello
-        uses: ./
-        with:
-          who-to-greet: 'Michel'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
-      - name: reusable
-        id: salut
-        uses: ./.github/workflows/workflow1.yml
-        with:
-          who-to-greet: 'Michel'
-          datato: "hello"
+  # hello_world_job:
+  #   runs-on: ubuntu-latest
+  #   name: A job to say hello
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Hello world action step
+  #       id: hello
+  #       uses: ./
+  #       with:
+  #         who-to-greet: 'Michel'
+  #     # Use the output from the `hello` step
+  #     - name: Get the output time
+  #       run: echo "The time was ${{ steps.hello.outputs.time }}"
+  call-workflow-passing-data:
+    uses: ./.github/workflows/workflow1.yml
+    with:
+      who-to-greet: hello
+    secrets:
+      personal_access_token: salut
