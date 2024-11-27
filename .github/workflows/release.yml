@@ -1,0 +1,9 @@
+on:
+  push:
+    branches:
+    - release
+
+jobs:
+  call-workflow-passing-data:
+    uses: ./.github/workflows/reusablerelease.yml
+    
