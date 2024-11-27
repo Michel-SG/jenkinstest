@@ -68,6 +68,19 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+      - run: |
+          set -x
+          
+  run_container_image:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run container
+        uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+      - run: |
+          set -x
+          docker version
+          docker run --rm hello-world
 
   my_second_job:
     name: My second job
