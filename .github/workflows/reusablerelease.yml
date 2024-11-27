@@ -56,4 +56,7 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+      - name: run Container
+        run: docker run --name appimage -d -p 8080:80 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+
       
