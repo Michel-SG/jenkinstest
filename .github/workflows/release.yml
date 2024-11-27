@@ -34,6 +34,7 @@ jobs:
     outputs:
       outputtag: ${{ steps.meta.outputs.tags }}
       outputlabel: ${{ steps.meta.outputs.labels }}
+      outputdigest: ${{ steps.push.outputs.digest }}
       output1: ${{ steps.step1.outputs.tag }}
       output2: ${{ steps.step2.outputs.label }}
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
@@ -116,8 +117,8 @@ jobs:
       - run: |
           set -x
           docker version
-          echo "output tag1:: :: ${{ needs.build-and-push-image.outputs.output1 }}"
-          echo "output tag2 :: :: ${{ needs.build-and-push-image.outputs.output2 }}"
+          echo "output tag:: :: ${{ needs.build-and-push-image.outputs.outputtag }}"
+          echo "output label :: :: ${{ needs.build-and-push-image.outputs.outputlabel }}"
 
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
       # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
@@ -138,7 +139,7 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-          subject-digest: ${{ needs.build-and-push-image.steps.push.outputs.digest }}
+          subject-digest: ${{ needs.build-and-push-image.outputs.outputdigest }}
           push-to-registry: true
 
   my_second_job:
