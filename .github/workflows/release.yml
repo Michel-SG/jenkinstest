@@ -20,7 +20,13 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
+# outputs:
+#   workflow_output1:
+#     description: "The first job output"
+#     value: ${{ jobs.my_job.outputs.job_output1 }}
+#   workflow_output2:
+#     description: "The second job output"
+#     value: ${{ jobs.my_job.outputs.job_output2 }}
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
   build-and-push-image:
@@ -111,8 +117,8 @@ jobs:
         # uses: docker/bake-action@v5
         with:
           push: true
-          tags: ${{ needs.build-and-push-image.steps.with.tags }}
-          labels: ${{ needs.build-and-push-image.steps.with.labels }}
+          tags: ${{ needs.build-and-push-image.steps.push.tags }}
+          labels: ${{ needs.build-and-push-image.steps.push.labels }}
 
 
       # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
