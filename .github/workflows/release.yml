@@ -71,13 +71,14 @@ jobs:
           # push: true
           # tags: ${{ steps.meta.outputs.tags }}
           # labels: ${{ steps.meta.outputs.labels }}
+          
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.2
         with:
           version: v0.56.2
           cache: true
           token: ${{ secrets.GITHUB_PAT }}
-        run: |
+      - run: |
           echo "image tag :: :: ${{ steps.meta.outputs.labels }}"
           trivy --version
 
