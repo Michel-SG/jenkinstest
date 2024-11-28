@@ -77,7 +77,7 @@ jobs:
         with:
           version: v0.56.2
           cache: true
-          token: ${{ secrets.GITHUB_PAT }}
+          token: ${{ secrets.TOCKEN_REGISTRY }}
       - run: |
           echo "image tag :: :: ${{ steps.meta.outputs.labels }}"
           trivy --version
