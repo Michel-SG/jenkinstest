@@ -126,9 +126,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOCKEN_REGISTRY }}
       - name: Run container
-        uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-      - run: |
+        # uses: docker-practice/actions-setup-docker@master
+        # timeout-minutes: 12
+        run: |
           set -x
           docker version
           echo "output tag:: :: ${{ needs.build-and-push-image.outputs.outputtag }}"
