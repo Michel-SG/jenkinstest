@@ -144,6 +144,7 @@ jobs:
           docker ps
           apk update && apk --no-cache add curl curl-dev bash
           curl "http://localhost:8080"
+          echo $GITHUB_REF
 
       - name: Delete container
         run: |
@@ -154,8 +155,8 @@ jobs:
       # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
       - name: Push Docker image into github registry
         id: push
-        # uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        uses: docker/bake-action@v5
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        # uses: docker/bake-action@v5
         with:
           push: true
           tags: ${{ needs.build-and-push-image.outputs.outputtag }}
