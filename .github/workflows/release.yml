@@ -72,10 +72,14 @@ jobs:
           # tags: ${{ steps.meta.outputs.tags }}
           # labels: ${{ steps.meta.outputs.labels }}
       - name: Vulnerability Scan with trivy
-        uses: lazy-actions/gitrivy@v3
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          token: ${{ secrets.TOCKEN_REGISTRY }}
-          image: ${{ steps.meta.outputs.tags }}
+          image-ref: '${{ steps.meta.outputs.tags }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
       - name: Get first output tag
         id: step1
