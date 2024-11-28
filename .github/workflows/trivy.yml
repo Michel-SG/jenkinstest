@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull docker image
-        run: docker pull sample
+        run: docker pull nginx
 
       - uses: lazy-actions/gitrivy@v3
         with:
-          token: ${{ secrets.TOCKEN_REGISTRY }}
-          image: sample
+          # token: ${{ secrets.TOCKEN_REGISTRY }}
+          image: nginx
