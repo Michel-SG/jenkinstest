@@ -84,9 +84,9 @@ jobs:
           cache: true
           token: ${{ secrets.TOCKEN_REGISTRY }}
       - run: |
-          echo "image tag :: :: ${{ steps.meta.outputs }}"
+          echo "image tag :: :: ${{ steps.meta.outputs.tags }}"
           trivy --version
-          echo "image taggggg :: :: ${{ steps.build.outputs }}"
+          echo "image taggggg :: :: ${{ GITHUB_OUTPUT }}"
 
       - name: Get first output tag
         id: step1
