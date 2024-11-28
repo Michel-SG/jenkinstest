@@ -130,14 +130,20 @@ jobs:
           set -x
           docker version
           echo "output tag:: :: ${{ needs.build-and-push-image.outputs.outputtag }}"
-          docker run --name IMAGE_NAME -d -p 8080:80 ${{ needs.build-and-push-image.outputs.outputtag }}
+          docker run --name ${{ needs.build-and-push-image.outputs.outputtag }} -d -p 8080:80 ${{ needs.build-and-push-image.outputs.outputtag }}
           sleep 5
           docker ps
+          apk update && apk --no-cache add curl curl-dev bash
           curl "http://localhost:8080"
+
+      - name: Delete container
+        run: |
+          docker stop ${{ needs.build-and-push-image.outputs.outputtag }}
+          docker rm -f ${{ needs.build-and-push-image.outputs.outputtag }}
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
       # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
       # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
-      - name: Build and push Docker image
+      - name: Push Docker image into github registry
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         # uses: docker/bake-action@v5

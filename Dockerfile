@@ -3,7 +3,7 @@
 # check=error=true
 
 # Container image that runs your code
-FROM nginx:latest
+FROM httpd:2.4
 
 # Expose port
 EXPOSE 80
