@@ -15,5 +15,5 @@ jobs:
 
       - uses: lazy-actions/gitrivy@v3
         with:
-          # token: ${{ secrets.TOCKEN_REGISTRY }}
+          token: ${{ secrets.TOCKEN_REGISTRY }}
           image: nginx
