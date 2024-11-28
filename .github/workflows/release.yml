@@ -86,7 +86,7 @@ jobs:
       - run: |
           echo "image tag :: :: ${{ steps.meta.outputs.tags }}"
           trivy --version
-          echo "image taggggg :: :: ${{ GITHUB_OUTPUT }}"
+          echo "image taggggg :: :: $GITHUB_OUTPUT"
 
       - name: Get first output tag
         id: step1
