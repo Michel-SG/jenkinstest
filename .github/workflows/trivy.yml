@@ -13,7 +13,11 @@ jobs:
       - name: Pull docker image
         run: docker pull nginx
 
-      - uses: dataswift/gha-trivy@v3.0.0
+      - uses: aquasecurity/trivy-action@0.28.0
         with:
-          token: ${{ secrets.TOCKEN_REGISTRY }}
-          image: nginx
+          image-ref: nginx
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
