@@ -82,7 +82,7 @@ jobs:
       - run: |
           echo "image tag :: :: ${{ steps.meta.outputs.labels }}"
           trivy --version
-          trivy image ${{ steps.meta.outputs.tags }}
+          
 
       - name: Get first output tag
         id: step1
