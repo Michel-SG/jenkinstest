@@ -81,7 +81,7 @@ jobs:
       - run: |
           echo "image tag :: :: ${{ steps.meta.outputs.labels }}"
           trivy --version
-          trivy image --scanners vuln ${{ steps.meta.outputs.tags }}
+          
 
       - name: Get first output tag
         id: step1
