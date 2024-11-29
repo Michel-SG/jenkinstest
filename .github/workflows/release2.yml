@@ -37,4 +37,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOCKEN_REGISTRY }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          IMAGE_NAME: ${{ env.CONTAINER_NAME }} 
+          IMAGE_NAME: ${{ env.IMAGE_NAME }} 
