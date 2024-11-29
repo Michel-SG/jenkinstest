@@ -178,9 +178,16 @@ jobs:
           version: v0.56.2
           cache: true
           token: ${{ secrets.TOCKEN_REGISTRY }}
-      - run: |
-          trivy --version
-          trivy image --severity HIGH,CRITICAL --format table -o trivy-scan-report.txt ${{ env.final_tag }}
+
+      - name: Run Trivy scanner without cache
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'image'
+          scan-ref: '${{ env.final_tag }}'
+          token-setup-trivy: ${{ secrets.TOCKEN_REGISTRY }}
+      # - run: |
+      #     trivy --version
+      #     trivy image --severity HIGH,CRITICAL --format table -o trivy-scan-report.txt ${{ env.final_tag }}
 
       - name: Upload Vulnerability Scan Results
         uses: actions/upload-artifact@v4
