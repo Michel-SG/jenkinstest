@@ -177,7 +177,7 @@ jobs:
         with:
           name: trivy-scan-report
           path: trivy-scan-report.txt
-          retention-days: 1     
+          retention-days: 2     
 
   my_second_job:
     name: My second job
