@@ -53,19 +53,5 @@ jobs:
         run: |
           docker stop ${{ env.CONTAINER_NAME }}
           docker rm -f ${{ env.CONTAINER_NAME }}
-
-      - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.2
-        with:
-          version: v0.56.2
-          cache: true
-          token: ${{ secrets.TOCKEN_REGISTRY }}
-
-      - name: Run scan with Trivy
-        id: Trivy
-        run: |
-          trivy --version
-          trivy image --format table -o trivy-scan-report.txt ${{ env.IMAGE_NAME }}
-    
      
 
