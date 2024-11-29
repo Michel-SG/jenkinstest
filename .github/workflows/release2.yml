@@ -33,6 +33,6 @@ jobs:
         uses: ./.github/actions/push_image_to_registry 
         with:
           TAG: $GITHUB_RUN_NUMBER
-          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+          REPOSITORY_NAME: ${{ github.repository }}
           REGISTRY: ${{ secrets.REGISTRY }}
            
