@@ -37,8 +37,7 @@ runs:
       # uses: docker/bake-action@v5
       with:
         push: true
-        tags: ${{ inputs.IMAGE_NAME }}
-        # tags: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}:${{ env.final_tag }}
+        tags: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}:${{ env.final_tag }}
 
     # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
     - name: Generate artifact attestation
@@ -53,7 +52,6 @@ runs:
       uses: aquasecurity/trivy-action@0.28.0
       with:
         scan-type: 'image'
-        # scan-ref: '${{ env.final_tag }}'
         scan-ref: '${{ inputs.IMAGE_NAME }}'
         output: 'trivy-scan-report.txt'
 

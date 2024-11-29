@@ -16,28 +16,12 @@ jobs:
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v4
-      # This step uses [docker/metadata-action](https://github.com/docker/metadata-action#about) to extract tags and labels that will be applied to the specified image. The `id` "meta" allows the output of this step to be referenced in a subsequent step. The `images` value provides the base name for the tags and labels.
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      
+      
+      - name: Use local build_image_action
+        uses: ./.github/actions/build_image
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
-      # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
-      # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
-      - name: Build Docker image
-        id: build
-        # uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        # offitial action
-        uses: docker/bake-action@v5
-        with:
-          context: .
-
-      # - name: Use local build_image_action
-      #   uses: ./.github/actions/build_image
-        # with:
-        #   REGISTRY: ${{ secrets.REGISTRY }}
-        #   REPOSITORY_NAME: ${{ github.repository }}
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       
 
       - name: Use local run_image_action
@@ -47,7 +31,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOCKEN_REGISTRY }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-          IMAGE_NAME: ${{ steps.meta.outputs.tags }} 
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }} 
       
       - name: Use local push_image_to_registry
         uses: ./.github/actions/push_image_to_registry 
@@ -55,5 +39,5 @@ jobs:
           TAG: $GITHUB_RUN_NUMBER
           REPOSITORY_NAME: ${{ github.repository }}
           REGISTRY: ${{ secrets.REGISTRY }}
-          IMAGE_NAME: ${{ steps.meta.outputs.tags }}
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
            
