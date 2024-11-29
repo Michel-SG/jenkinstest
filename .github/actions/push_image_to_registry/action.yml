@@ -65,7 +65,7 @@ runs:
       shell: bash
       run: |
         trivy --version
-        trivy image --format table -o trivy-scan-report.txt ${{ needs.build-and-push-image.outputs.outputtag }}
+        trivy image --format table -o trivy-scan-report.txt ${{ inputs.IMAGE_NAME }}
 
 
     - name: Check workspace
