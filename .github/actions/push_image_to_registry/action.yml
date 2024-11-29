@@ -31,22 +31,22 @@ runs:
     # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
     # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
     # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
-    - name: Push Docker image into github registry
-      id: push
-      uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-      # uses: docker/bake-action@v5
-      with:
-        push: true
-        tags: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}:${{ env.final_tag }}
+    # - name: Push Docker image into github registry
+    #   id: push
+    #   uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+    #   # uses: docker/bake-action@v5
+    #   with:
+    #     push: true
+    #     tags: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}:${{ env.final_tag }}
 
-    # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
-    - name: Generate artifact attestation
-      id: artifactimage
-      uses: actions/attest-build-provenance@v1
-      with:
-        subject-name: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}
-        subject-digest: ${{ steps.push.outputs.digest }}
-        push-to-registry: true
+    # # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
+    # - name: Generate artifact attestation
+    #   id: artifactimage
+    #   uses: actions/attest-build-provenance@v1
+    #   with:
+    #     subject-name: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME}}
+    #     subject-digest: ${{ steps.push.outputs.digest }}
+    #     push-to-registry: true
     
     - name: Run Trivy scanner without cache
       uses: aquasecurity/trivy-action@0.28.0
