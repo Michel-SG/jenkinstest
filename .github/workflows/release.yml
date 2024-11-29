@@ -161,7 +161,7 @@ jobs:
         with:
           push: true
           tags:  ${{ env.final_tag }}
-          labels: ${{ needs.build-and-push-image.outputs.outputlabel }}
+          # labels: ${{ needs.build-and-push-image.outputs.outputlabel }}
       
       # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
       - name: Generate artifact attestation
@@ -188,14 +188,4 @@ jobs:
           name: trivy-scan-report
           path: trivy-scan-report.txt
           retention-days: 2     
-
-  my_second_job:
-    name: My second job
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '14'
-      - run: npm install -g bats
 
