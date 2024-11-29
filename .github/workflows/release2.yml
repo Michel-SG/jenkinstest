@@ -11,6 +11,8 @@ on:
 env:
   REGISTRY: ghcr.io
   REPOSITORY_NAME: ${{ github.repository }}
+  IMAGE_NAME: monimage
+  CONTAINER_NAME: appimagcontainer
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
@@ -33,13 +35,24 @@ jobs:
         id: build
         shell: bash
         run: |
-          docker build -t myimagename .
+          docker build -t ${{ env.IMAGE_NAME }} .
         
       - name: Run container
         shell: bash
         run: |
           docker version
           docker images
+          docker run --name ${{ env.CONTAINER_NAME }} -d -p 8080:80 ${{ env.IMAGE_NAME }}
+          sleep 5
+          docker ps
+          apk update && apk --no-cache add curl curl-dev bash
+          curl "http://localhost:8080"
+
+      - name: Delete container
+        shell: bash
+        run: |
+          docker stop ${{ env.CONTAINER_NAME }}
+          docker rm -f ${{ env.CONTAINER_NAME }}
           
      
 
