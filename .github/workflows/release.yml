@@ -184,7 +184,7 @@ jobs:
         with:
           scan-type: 'image'
           scan-ref: '${{ env.final_tag }}'
-          token-setup-trivy: ${{ secrets.TOCKEN_REGISTRY }}
+          output: 'trivy-scan-report.txt'
       # - run: |
       #     trivy --version
       #     trivy image --severity HIGH,CRITICAL --format table -o trivy-scan-report.txt ${{ env.final_tag }}
