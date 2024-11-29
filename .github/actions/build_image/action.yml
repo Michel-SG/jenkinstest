@@ -1,17 +1,27 @@
 name: build image
 description: run build
 inputs:
-  IMAGE_NAME: 
-    description: "image name"
+  REGISTRY: 
+    description: "registry name"
+    required: true
+  REPOSITORY_NAME: 
+    description: "repository name"
     required: true
 
 runs:
   using: composite
+  
   steps:
+    
     - name: Build Docker image
       id: build
-      shell: bash
-      run: |
-        docker build -t ${{ inputs.IMAGE_NAME }} .
+      # uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+      # offitial action
+      uses: docker/bake-action@v5
+      with:
+        context: .
+      # shell: bash
+      # run: |
+      #   docker build -t ${{ inputs.IMAGE_NAME }} .
 
    

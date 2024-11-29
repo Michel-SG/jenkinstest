@@ -17,9 +17,10 @@ jobs:
 
       - name: Use local build_image_action
         uses: ./.github/actions/build_image
-        with:
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-        
+        # with:
+        #   REGISTRY: ${{ secrets.REGISTRY }}
+        #   REPOSITORY_NAME: ${{ github.repository }}
+
       - name: Use local run_image_action
         uses: ./.github/actions/run_and_test_image 
         with:
