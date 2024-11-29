@@ -186,7 +186,8 @@ jobs:
           scan-ref: '${{ env.final_tag }}'
           output: 'trivy-scan-report.txt'
       - run: |
-          echo " github workspace:: :: ${{ github.workspace }}""
+          echo " github workspace:: :: ${{ github.workspace }}"
+          ls -a ${{ github.workspace }}
       #     trivy image --severity HIGH,CRITICAL --format table -o trivy-scan-report.txt ${{ env.final_tag }}
 
       - name: Upload Vulnerability Scan Results
