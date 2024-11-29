@@ -180,7 +180,7 @@ jobs:
           token: ${{ secrets.TOCKEN_REGISTRY }}
       - run: |
           trivy --version
-          trivy image TRIVY_SKIP_DB_UPDATE=true TRIVY_SKIP_JAVA_DB_UPDATE=true --format table -o trivy-scan-report.txt ${{ env.final_tag }}
+          trivy image --severity HIGH,CRITICAL --skip-db-update --skip-java-db-update --format table -o trivy-scan-report.txt ${{ env.final_tag }}
 
       - name: Upload Vulnerability Scan Results
         uses: actions/upload-artifact@v4
