@@ -172,12 +172,12 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
           
-      - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.2
-        with:
-          version: v0.56.2
-          cache: true
-          token: ${{ secrets.TOCKEN_REGISTRY }}
+      # - name: Install Trivy
+      #   uses: aquasecurity/setup-trivy@v0.2.2
+      #   with:
+      #     version: v0.56.2
+      #     cache: true
+      #     token: ${{ secrets.TOCKEN_REGISTRY }}
 
       - name: Run Trivy scanner without cache
         uses: aquasecurity/trivy-action@0.28.0
