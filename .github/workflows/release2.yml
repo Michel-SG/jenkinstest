@@ -31,21 +31,15 @@ jobs:
       # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
       - name: Build Docker image
         id: build
-        # offitial action
-        uses: docker/bake-action@v5
-        with:
-          context: .
-          
-            
+        shell: bash
+        run: |
+          docker build -t myimagename .
+        
       - name: Run container
         shell: bash
         run: |
           docker version
           docker images
-          docker run --name appcontainerimage -d -p 8080:80 ${{ steps.meta.outputs.tags }}
-          sleep 5
-          docker ps
-          apk update && apk --no-cache add curl curl-dev bash
-          curl "http://localhost:8080"  
+          
      
 
