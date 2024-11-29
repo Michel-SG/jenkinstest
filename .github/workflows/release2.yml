@@ -20,6 +20,12 @@ jobs:
         # with:
         #   REGISTRY: ${{ secrets.REGISTRY }}
         #   REPOSITORY_NAME: ${{ github.repository }}
+      # This step uses [docker/metadata-action](https://github.com/docker/metadata-action#about) to extract tags and labels that will be applied to the specified image. The `id` "meta" allows the output of this step to be referenced in a subsequent step. The `images` value provides the base name for the tags and labels.
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME }}
 
       - name: Use local run_image_action
         uses: ./.github/actions/run_and_test_image 
@@ -28,7 +34,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOCKEN_REGISTRY }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }} 
+          IMAGE_NAME: ${{ steps.meta.outputs.tags }} 
       
       - name: Use local push_image_to_registry
         uses: ./.github/actions/push_image_to_registry 
