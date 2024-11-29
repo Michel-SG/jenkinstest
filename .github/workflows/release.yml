@@ -135,10 +135,10 @@ jobs:
           apk update && apk --no-cache add curl curl-dev bash
           curl "http://localhost:8080"
 
-      # - name: Delete container
-      #   run: |
-      #     docker stop ${{ env.IMAGE_CONTAINER_NAME}}
-      #     docker rm -f ${{ env.IMAGE_CONTAINER_NAME}}
+      - name: Delete container
+        run: |
+          docker stop ${{ env.IMAGE_CONTAINER_NAME}}
+          docker rm -f ${{ env.IMAGE_CONTAINER_NAME}}
       
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.2

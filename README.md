@@ -5,3 +5,6 @@ git update-index --chmod=+x entrypoint.sh
 
 ## Vérifier que le fichier est exécutable, 755 indique l’autorisation exécutable
 git ls-files --stage entrypoint.sh
+
+## Lien trivy
+https://github.com/marketplace/actions/aqua-security-trivy
