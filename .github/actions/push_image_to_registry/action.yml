@@ -1,17 +1,20 @@
 name: push image
 description: push image to the github registry
 inputs:
-  TAG: 
-    description: "image tag"
-    required: true
-  REPOSITORY_NAME: 
-    description: "name of the image"  
-    required: true
-  REGISTRY: 
-    description: "registry name"
-    required: true
+  # TAG: 
+  #   description: "image tag"
+  #   required: true
+  # REPOSITORY_NAME: 
+  #   description: "name of the image"  
+  #   required: true
+  # REGISTRY: 
+  #   description: "registry name"
+  #   required: true
   IMAGE_NAME: 
-    description: "registry name"
+    description: "image name"
+    required: true
+  TOCKEN_REGISTRY: 
+    description: "token name"
     required: true
 
 runs:
@@ -60,7 +63,7 @@ runs:
       with:
         version: v0.56.2
         cache: true
-        token: ${{ secrets.TOCKEN_REGISTRY }}
+        token: ${{ inputs.TOCKEN_REGISTRY }}
     - name: Run Trivy scran
       shell: bash
       run: |

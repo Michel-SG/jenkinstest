@@ -37,7 +37,8 @@ jobs:
         uses: ./.github/actions/push_image_to_registry 
         with:
           TAG: $GITHUB_RUN_NUMBER
-          REPOSITORY_NAME: ${{ github.repository }}
-          REGISTRY: ${{ secrets.REGISTRY }}
+          # REPOSITORY_NAME: ${{ github.repository }}
+          # REGISTRY: ${{ secrets.REGISTRY }}
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+          TOCKEN_REGISTRY: ${{ secrets.TOCKEN_REGISTRY }}
            
