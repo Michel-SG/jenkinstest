@@ -4,7 +4,7 @@ inputs:
   TAG: 
     description: "image tag"
     required: true
-  IMAGE_NAME: 
+  CONTAINER_NAME: 
     description: "name of the image"  
     required: true
   REGISTRY: 
@@ -32,14 +32,14 @@ runs:
       # uses: docker/bake-action@v5
       with:
         push: true
-        tags: ${{ inputs.REGISTRY }}/${{ inputs.IMAGE_NAME}}:${{ env.final_tag }}
+        tags: ${{ inputs.REGISTRY }}/${{ inputs.CONTAINER_NAME}}:${{ env.final_tag }}
 
     # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
     - name: Generate artifact attestation
       id: artifactimage
       uses: actions/attest-build-provenance@v1
       with:
-        subject-name: ${{ inputs.REGISTRY }}/${{ inputs.IMAGE_NAME}}
+        subject-name: ${{ inputs.REGISTRY }}/${{ inputs.CONTAINER_NAME}}
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: true
     
@@ -55,7 +55,7 @@ runs:
       run: |
         echo " github workspace:: :: ${{ github.workspace }}"
         ls -a ${{ github.workspace }}
-        
+
     - name: Upload Vulnerability Scan Results
       uses: actions/upload-artifact@v4
       with:
