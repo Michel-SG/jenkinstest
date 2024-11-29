@@ -48,14 +48,27 @@ runs:
     #     subject-digest: ${{ steps.push.outputs.digest }}
     #     push-to-registry: true
     
-    - name: Run Trivy scanner without cache
-      uses: aquasecurity/trivy-action@0.28.0
-      with:
-        scan-type: 'image'
-        scan-ref: '${{ inputs.IMAGE_NAME }}'
-        output: 'trivy-scan-report.txt'
+    # - name: Run Trivy scanner without cache
+    #   uses: aquasecurity/trivy-action@0.28.0
+    #   with:
+    #     scan-type: 'image'
+    #     scan-ref: '${{ inputs.IMAGE_NAME }}'
+    #     output: 'trivy-scan-report.txt'
 
-    - name: Run Trivy scanner without cache
+    - name: Install Trivy
+      uses: aquasecurity/setup-trivy@v0.2.2
+      with:
+        version: v0.56.2
+        cache: true
+        token: ${{ secrets.TOCKEN_REGISTRY }}
+    - name: Run Trivy scran
+      shell: bash
+      run: |
+        trivy --version
+        trivy image --format table -o trivy-scan-report.txt ${{ needs.build-and-push-image.outputs.outputtag }}
+
+
+    - name: Check workspace
       shell: bash
       run: |
         echo " github workspace:: :: ${{ github.workspace }}"
