@@ -31,7 +31,7 @@ jobs:
           docker build -t ${{ env.IMAGE_NAME }} .
         
       - name: Use local push-image-action
-        uses: ./.github/actions/push_image 
+        uses: ./.github/actions/run_and_test_image 
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
