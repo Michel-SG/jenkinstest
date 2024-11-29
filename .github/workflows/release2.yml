@@ -9,19 +9,16 @@ on:
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: ${{ secrets.REGISTRY }}
   REPOSITORY_NAME: ${{ github.repository }}
-  IMAGE_NAME: monimage
-  CONTAINER_NAME: appimagcontainer
+  IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+  CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
   build-and-push-image:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
       - name: Use local build-image-action
         uses: ./.github/actions/build_image
         with:
