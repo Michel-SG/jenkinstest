@@ -155,7 +155,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: '${{ needs.build-and-push-image.outputs.outputtag }}'
-          format: 'txt'
+          format: 'table'
           output: 'trivy-results.txt'
 
       - name: Upload Vulnerability Scan Results
