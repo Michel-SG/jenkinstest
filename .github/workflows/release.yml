@@ -149,7 +149,7 @@ jobs:
         run: |
           if [ -z "${{ needs.build-and-push-image.outputs.outputtag }}" ]
           then
-            echo "final_tag=latest" >> $GITHUB_ENV
+            echo "final_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:latest" >> $GITHUB_ENV
           else
             echo "final_tag=${{ needs.build-and-push-image.outputs.outputtag }}" >> $GITHUB_ENV
           fi
@@ -160,12 +160,7 @@ jobs:
         # uses: docker/bake-action@v5
         with:
           push: true
-          tags:  if ${{ needs.build-and-push-image.outputs.outputtag }}
-                  then 
-                    ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:latest
-                  else
-                    ${{ needs.build-and-push-image.outputs.outputtag }}
-                  fi
+          tags:  ${{ env.final_tag }}
           labels: ${{ needs.build-and-push-image.outputs.outputlabel }}
       
       # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
