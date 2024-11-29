@@ -160,7 +160,12 @@ jobs:
         # uses: docker/bake-action@v5
         with:
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ env.final_tag }}
+          tags:  if ${{ needs.build-and-push-image.outputs.outputtag }}
+                  then 
+                    ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:latest
+                  else
+                    ${{ needs.build-and-push-image.outputs.outputtag }}
+                  fi
           labels: ${{ needs.build-and-push-image.outputs.outputlabel }}
       
       # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
