@@ -27,12 +27,19 @@ runs:
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
 
+    # This step uses [docker/metadata-action](https://github.com/docker/metadata-action#about) to extract tags and labels that will be applied to the specified image. The `id` "meta" allows the output of this step to be referenced in a subsequent step. The `images` value provides the base name for the tags and labels.
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      with:
+        images: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_NAME }}
+
     - name: Run container
       shell: bash
       run: |
         docker version
         docker images
-        docker run --name ${{ inputs.CONTAINER_NAME }} -d -p 8080:80 ${{ inputs.IMAGE_NAME }}
+        docker run --name ${{ inputs.CONTAINER_NAME }} -d -p 8080:80 ${{ steps.meta.outputs.tags }}
         sleep 5
         docker ps
         apk update && apk --no-cache add curl curl-dev bash
