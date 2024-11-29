@@ -49,10 +49,13 @@ runs:
         scan-type: 'image'
         scan-ref: '${{ env.final_tag }}'
         output: 'trivy-scan-report.txt'
+
+    - name: Run Trivy scanner without cache
+      shell: bash
       run: |
         echo " github workspace:: :: ${{ github.workspace }}"
         ls -a ${{ github.workspace }}
-   
+        
     - name: Upload Vulnerability Scan Results
       uses: actions/upload-artifact@v4
       with:

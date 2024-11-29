@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.TOCKEN_REGISTRY }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }} 
-
+      
       - name: Use local push_image_to_registry
         uses: ./.github/actions/push_image_to_registry 
         with:
