@@ -37,8 +37,16 @@ jobs:
           context: .
           # push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:latest
-          labels: ${{ steps.meta.outputs.labels }}
             
+      - name: Run container
+        shell: bash
+        run: |
+          docker version
           
+          docker run --name appcontainerimage -d -p 8080:80 ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}:latest
+          sleep 5
+          docker ps
+          apk update && apk --no-cache add curl curl-dev bash
+          curl "http://localhost:8080"  
      
 
