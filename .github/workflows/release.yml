@@ -134,7 +134,6 @@ jobs:
           docker ps
           apk update && apk --no-cache add curl curl-dev bash
           curl "http://localhost:8080"
-          echo "ref tag $github.ref"
 
       - name: Delete container
         run: |
