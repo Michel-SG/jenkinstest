@@ -185,14 +185,14 @@ jobs:
           scan-type: 'image'
           scan-ref: '${{ env.final_tag }}'
           output: 'trivy-scan-report.txt'
-      # - run: |
-      #     trivy --version
+      - run: |
+          echo " github workspace:: :: ${{ github.workspace }}""
       #     trivy image --severity HIGH,CRITICAL --format table -o trivy-scan-report.txt ${{ env.final_tag }}
 
       - name: Upload Vulnerability Scan Results
         uses: actions/upload-artifact@v4
         with:
           name: trivy-scan-report
-          path: trivy-scan-report.txt
+          path: "${{ github.workspace }}/trivy-scan-report.txt"
           retention-days: 2     
 
