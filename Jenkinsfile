@@ -14,6 +14,9 @@ node {
     stage('Run docker') {
         sh 'docker build -t myapp .'
     }
+    stage('Check docker images') {
+        sh 'dockerimages'
+    }
     stage('Run Trivy') {
         sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt myapp'
     }
