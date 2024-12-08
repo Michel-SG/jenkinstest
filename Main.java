@@ -5,6 +5,6 @@ public class Main{
         System.out.println("Hello World, comment allez vous ?");
         System.out.println("Je vais super bien merci !");
         System.out.println("Je compte voyager demain matin, merci d'y penser");
-        System.out.println("OK j'y penserai, merci de m'avoir dit");
+        
     }
 }
