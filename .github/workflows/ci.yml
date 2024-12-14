@@ -27,6 +27,7 @@ jobs:
       env:
         super_secret: ${{ secrets.SUPERSECRET }}
         user_secret: ${{ secrets.GITHUB_USER }}
+        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         echo $super_secret
         echo $user_secret
@@ -35,7 +36,8 @@ jobs:
         echo "sha :" ${{github.sha}}
         echo "repository : " ${{github.repository}}
         echo $GITHUB_BASE_REF
-
+      
+        
     - name: Validate PR checkboxes
       id: checkboxes
       
