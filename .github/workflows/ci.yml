@@ -2,7 +2,7 @@ name: copy files
 on: 
   push:
     branches:
-    - hello/hel
+    - feature/1
   pull_request:
     types: [opened, edited, reopened]
 
@@ -44,7 +44,7 @@ jobs:
         
         PR_BODY = ${{ github.event.pull_request.body }}
         
-        echo $PR_BODY 
+        echo ${{PR_BODY}} 
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
