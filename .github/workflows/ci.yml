@@ -42,14 +42,19 @@ jobs:
       id: checkboxes
       env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        A: ${{ toJson(github.event.pull_request) }}
+        B: ${{ github.event.pull_request.id }}
+        C: ${{ github.event.pull_request.number }}
+        D: ${{ github.event.pull_request.state }}
+        E: ${{ github.event.pull_request.title }} 
       run: |
         # Get the PR body
-        echo "${{ toJson(github.event.pull_request) }}"
-        echo ${{ github.event.pull_request.id }}
-        echo ${{ github.event.pull_request.number }}
-        echo ${{ github.event.pull_request.state }}
-        echo ${{ github.event.pull_request.title }} 
-        echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")" 
+        echo $A
+        echo $B
+        echo $C
+        echo $D
+        echo $E 
+        echo "$(gh pr view --json number -q .number || echo "")" 
         
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
