@@ -50,11 +50,11 @@ jobs:
        
       run: |
         # Get the PR body
-        echo $A
-        echo $B
-        echo $C
-        echo $D
-        echo $E 
+        echo "$A"
+        echo "$B"
+        echo "$C"
+        echo "$D"
+        echo "$E" 
         echo "$(gh pr view --json number -q .number || echo "")" 
         
         # Define the required checkbox text
