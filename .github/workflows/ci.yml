@@ -2,7 +2,9 @@ name: copy files
 on: 
   push:
     branches:
-    - feature/hel
+    - hello
+  pull_request:
+    types: [opened, edited, reopened]
 
 jobs:
 
@@ -33,6 +35,27 @@ jobs:
         echo "sha :" ${{github.sha}}
         echo "repository : " ${{github.repository}}
         echo $GITHUB_BASE_REF
+
+    - name: Validate PR checkboxes
+      id: checkboxes
+      run: |
+        # Get the PR body
+        PR_BODY="${{ github.event.pull_request.body }}"
+        echo $PR_BODY
+
+        # Define the required checkbox text
+        REQUIRED_CHECKBOXES=("Task 1" "Task 2")
+
+        # Check for each required checkbox
+        # for TASK in "${REQUIRED_CHECKBOXES[@]}"; do
+        #   if ! echo "$PR_BODY" | grep -qE "- \[x\] $TASK"; then
+        #     echo "❌ Checkbox for '$TASK' is not checked!"
+        #     exit 1
+        #   fi
+        # done
+
+        # echo "✅ All required checkboxes are checked!"
+
 
     - name: Cache node modules
       uses: actions/cache@v3
