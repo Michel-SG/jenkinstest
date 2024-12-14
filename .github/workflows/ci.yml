@@ -42,7 +42,7 @@ jobs:
       run: |
         # Get the PR body
         
-        echo ${{ github.event.pull_request }}
+        echo ${{ github.event.pull_request.body }}
         
 
         # Define the required checkbox text
