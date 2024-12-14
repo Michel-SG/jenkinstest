@@ -38,14 +38,12 @@ jobs:
 
     - name: Validate PR checkboxes
       id: checkboxes
-      env:
-          GITHUB_CONTEXT: ${{ github.event.pull_request }}
+      
       run: |
         # Get the PR body
         
-        echo $GITHUB_CONTEXT
-        # Get again PR body
-        echo "${{GITHUB_CONTEXT}}"
+        echo ${{ github.event.pull_request.head.sha }}
+        
 
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
