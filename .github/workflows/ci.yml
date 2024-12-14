@@ -2,10 +2,8 @@ name: copy files
 on: 
   push:
     branches:
-    - feature/1
-  pull_request:
-    branches:
-    - main
+    - feature/hel
+
 jobs:
 
   build:
