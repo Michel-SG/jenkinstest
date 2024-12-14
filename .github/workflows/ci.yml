@@ -44,7 +44,7 @@ jobs:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         # Get the PR body
-        
+        echo "${{ toJson(github.event.pull_request) }}"
         echo ${{ github.event.pull_request.id }}
         echo ${{ github.event.pull_request.number }}
         echo ${{ github.event.pull_request.state }}
