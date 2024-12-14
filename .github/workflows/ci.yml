@@ -11,6 +11,13 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        A: ${{ toJson(github.event.pull_request) }}
+        B: ${{ github.event.pull_request.id }}
+        C: ${{ github.event.pull_request.number }}
+        D: ${{ github.event.pull_request.state }}
+        E: ${{ github.event.pull_request.title }}
     steps:
     - uses: actions/checkout@master
     - name: copy file
@@ -40,13 +47,7 @@ jobs:
         
     - name: Validate PR checkboxes
       id: checkboxes
-      env:
-        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
-        A: ${{ toJson(github.event.pull_request) }}
-        B: ${{ github.event.pull_request.id }}
-        C: ${{ github.event.pull_request.number }}
-        D: ${{ github.event.pull_request.state }}
-        E: ${{ github.event.pull_request.title }} 
+       
       run: |
         # Get the PR body
         echo $A
