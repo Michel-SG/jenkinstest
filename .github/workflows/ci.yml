@@ -2,7 +2,7 @@ name: copy files
 on: 
   push:
     branches:
-    - hello
+    - hello/hel
   pull_request:
     types: [opened, edited, reopened]
 
