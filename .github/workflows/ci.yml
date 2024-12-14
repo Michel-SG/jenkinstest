@@ -42,9 +42,9 @@ jobs:
       run: |
         # Get the PR body
         
-        echo ${{ github.event.pull_request.body }}
+        PR_BODY = ${{ github.event.pull_request.body }}
         
-
+        echo $PR_BODY 
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
