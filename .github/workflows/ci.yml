@@ -39,7 +39,7 @@ jobs:
     - name: Validate PR checkboxes
       id: checkboxes
       env:
-          GITHUB_CONTEXT: ${{toJSON(github)}}
+          GITHUB_CONTEXT: ${{ github.event.pull_request }}
       run: |
         # Get the PR body
         
