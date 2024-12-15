@@ -2,7 +2,7 @@ name: copy files
 on: 
   push:
     branches:
-    - hello/hel
+    - feature/1
   pull_request:
     types: [opened, edited, reopened]
 
@@ -11,6 +11,13 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        A: ${{ toJson(github.event.pull_request) }}
+        B: ${{ github.event.pull_request.id }}
+        C: ${{ github.event.pull_request.number }}
+        D: ${{ github.event.pull_request.state }}
+        E: ${{ github.event.pull_request.title }}
     steps:
     - uses: actions/checkout@master
     - name: copy file
@@ -27,6 +34,7 @@ jobs:
       env:
         super_secret: ${{ secrets.SUPERSECRET }}
         user_secret: ${{ secrets.GITHUB_USER }}
+        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         echo $super_secret
         echo $user_secret
@@ -35,16 +43,25 @@ jobs:
         echo "sha :" ${{github.sha}}
         echo "repository : " ${{github.repository}}
         echo $GITHUB_BASE_REF
-
+      
+    # Ajoutez un fichier README.md au dépôt
+    - name: Add README.md
+      run: |
+        echo "# Bienvenue dans ce projet" > README.md
+        echo "Ce fichier a été ajouté automatiquement via une GitHub Action." >> README.md    
+    
     - name: Validate PR checkboxes
       id: checkboxes
-      
+       
       run: |
         # Get the PR body
+        echo "$A"
+        echo "$B"
+        echo "$C"
+        echo "$D"
+        echo "$E" 
+        echo "$(gh pr view --json number -q .number || echo "")" 
         
-        echo ${{ github.event.pull_request.body }}
-        
-
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
