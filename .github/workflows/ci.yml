@@ -44,7 +44,12 @@ jobs:
         echo "repository : " ${{github.repository}}
         echo $GITHUB_BASE_REF
       
-        
+    # Ajoutez un fichier README.md au dépôt
+    - name: Add README.md
+      run: |
+        echo "# Bienvenue dans ce projet" > README.md
+        echo "Ce fichier a été ajouté automatiquement via une GitHub Action." >> README.md    
+    
     - name: Validate PR checkboxes
       id: checkboxes
        
