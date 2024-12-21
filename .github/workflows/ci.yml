@@ -126,7 +126,7 @@ jobs:
         echo ${{ needs.build.outputs.output1 }}
         if [ "${{ needs.build.outputs.output1 }}" == "false" ]; then
           COMMENT_BODY="❌ Certaines cases ne sont pas cochées dans la checklist. Veuillez vérifier."
-        else if [ "${{ needs.build.outputs.output1 }}" == "true" ];then
+        else
           COMMENT_BODY="✅ Toutes les cases sont cochées. PR prête pour la fusion."
         fi
         gh pr comment ${{ github.event.pull_request.number }} --body "$COMMENT_BODY"
