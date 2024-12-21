@@ -90,14 +90,3 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Dockerfile') }}
         restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-
-  clear-cache:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Nettoyage du cache si nécessaire
-      - name: Clear cache
-        run: |
-          echo "Nettoyage du cache en cours..."
-          sudo rm -rf ~/.cache
-          echo "Cache nettoyé avec succès."
