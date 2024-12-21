@@ -58,15 +58,15 @@ jobs:
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
-        # Check for each required checkbox
-        # for TASK in "${REQUIRED_CHECKBOXES[@]}"; do
-        #   if ! echo "$PR_BODY" | grep -qE "- \[x\] $TASK"; then
-        #     echo "❌ Checkbox for '$TASK' is not checked!"
-        #     exit 1
-        #   fi
-        # done
+        Check for each required checkbox
+        for TASK in "${REQUIRED_CHECKBOXES[@]}"; do
+          if ! echo "$PR_BODY" | grep -qE "- \[x\] $TASK"; then
+            echo "❌ Checkbox for '$TASK' is not checked!"
+            exit 1
+          fi
+        done
 
-        # echo "✅ All required checkboxes are checked!"
+        echo "✅ All required checkboxes are checked!"
 
 
     - name: Cache node modules
