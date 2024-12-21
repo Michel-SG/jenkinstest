@@ -53,12 +53,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         # Get the PR body
-        
+
         if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
-          echo "❌ Certaines cases ne sont pas cochées dans la checklist."
+          echo "Error: Not all ❌ checklist items are completed."
           exit 1
         else
-          echo "✅ Toutes les cases de la checklist sont cochées."
+          echo "✅ All required checkboxes are checked!"
         fi
 
         # PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
