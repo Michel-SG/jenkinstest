@@ -1,4 +1,4 @@
-name: Enforce PR Checklist
+name: Enforce PR checklist
 on: 
   pull_request:
     types: [opened, edited, reopened, synchronize]
