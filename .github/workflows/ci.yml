@@ -121,8 +121,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
-        echo ${{ needs.build.checkboxes.outputs.success }}
-        if [ "${{ needs.build.checkboxes.outputs.success }}" == "false" ]; then
+        echo ${{ needs.build.steps.checkboxes.outputs.success }}
+        if [ "${{ needs.build.steps.checkboxes.outputs.success }}" == "false" ]; then
           COMMENT_BODY="❌ Certaines cases ne sont pas cochées dans la checklist. Veuillez vérifier."
         else
           COMMENT_BODY="✅ Toutes les cases sont cochées. PR prête pour la fusion."
