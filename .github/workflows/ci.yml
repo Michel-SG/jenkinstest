@@ -54,7 +54,7 @@ jobs:
         # Get the PR body
         PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
         echo $PR_BODY
-        CHECKLIST=$(echo "$PR_BODY" | jq -r '.body' | grep -P "^\s*- \[ \]") #Look for unchecked boxes
+        CHECKLIST=$(echo "$PR_BODY" | jq -r '.body' | grep -q '\- \[ \]') #Look for unchecked boxes
         if [ ! -z "$CHECKLIST" ]; then
           echo "Error: Not all ❌ checklist items are completed."
           exit 1
