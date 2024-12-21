@@ -1,10 +1,7 @@
-name: copy files
+name: Enforce PR Checklist
 on: 
-  push:
-    branches:
-    - feature/1
   pull_request:
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
 
@@ -55,13 +52,9 @@ jobs:
        
       run: |
         # Get the PR body
-        echo "$A"
-        echo "$B"
-        echo "$C"
-        echo "$D"
-        echo "$E" 
-        echo "$(gh pr view --json number -q .number || echo "")" 
-        
+        PR_BODY="${{ github.event.pull_request.body }}"
+        echo $PR_BODY
+
         # Define the required checkbox text
         REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
