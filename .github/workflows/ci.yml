@@ -60,12 +60,14 @@ jobs:
           echo "✅ All required checkboxes are checked!"
         fi
           
+
+          
         # EXPECTED_SHA=${{ github.event.pull_request.head.sha }}
         # if ! echo "$PR_BODY" | grep -q "$EXPECTED_SHA"; then
         #   echo "❌ Le SHA dans la PR ne correspond pas au SHA actuel (${EXPECTED_SHA})."
         #   exit 1
         # fi
-        echo "✅ Checklist validée : toutes les cases sont cochées et le SHA est correct."
+        
 
 
         # if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
