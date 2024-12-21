@@ -55,11 +55,11 @@ jobs:
         PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
         if echo "$PR_BODY" | grep -q '\- \[ \]'; then
           echo "❌ Certaines cases ne sont pas cochées dans la checklist."
-          echo "success=false" >> $GITHUB_ENV
+          echo "success=false" >> $GITHUB_OUTPUT
           exit 1
         else
           echo "✅ All required checkboxes are checked!"
-          echo "success=true" >> $GITHUB_ENV
+          echo "success=true" >> $GITHUB_OUTPUT
         fi
           
 
