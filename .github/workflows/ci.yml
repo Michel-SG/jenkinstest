@@ -54,22 +54,22 @@ jobs:
       run: |
         # Get the PR body
 
-        if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
-          echo "Error: Not all ❌ checklist items are completed."
-          exit 1
-        else
-          echo "✅ All required checkboxes are checked!"
-        fi
-
-        # PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
-        # echo $PR_BODY
-        # CHECKLIST=$(echo "$PR_BODY" | jq -r '.body' | grep -P "^\s*- \[ \]") #Look for unchecked boxes
-        # if [ ! -z "$CHECKLIST" ]; then
+        # if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
         #   echo "Error: Not all ❌ checklist items are completed."
         #   exit 1
         # else
         #   echo "✅ All required checkboxes are checked!"
         # fi
+
+        PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
+        
+        CHECKLIST=$(echo "$PR_BODY" | jq -r '.body' | grep -P "^\s*- \[ \]") #Look for unchecked boxes
+        if [ ! -z "$CHECKLIST" ]; then
+          echo "Error: Not all ❌ checklist items are completed."
+          exit 1
+        else
+          echo "✅ All required checkboxes are checked!"
+        fi
         
         # Define the required checkbox text
         # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
