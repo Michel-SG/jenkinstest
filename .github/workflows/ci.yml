@@ -58,8 +58,10 @@ jobs:
         if [ ! -z "$CHECKLIST" ]; then
           echo "Error: Not all ❌ checklist items are completed."
           exit 1
+        else
+          echo "✅ All required checkboxes are checked!"
         fi
-        echo "✅ All required checkboxes are checked!"
+        
         # Define the required checkbox text
         # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
