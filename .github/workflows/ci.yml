@@ -49,14 +49,30 @@ jobs:
     
     - name: Validate PR checkboxes
       id: checkboxes
-       
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         # Get the PR body
-        PR_BODY="${{ github.event.pull_request.body }}"
-        echo $PR_BODY
 
+        if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
+          echo "Error: Not all ❌ checklist items are completed."
+          exit 1
+        else
+          echo "✅ All required checkboxes are checked!"
+        fi
+
+        # PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
+        
+        # CHECKLIST=$(echo "$PR_BODY" | jq -r '.body' | grep -P "^\s*- \[ \]") #Look for unchecked boxes
+        # if [ ! -z "$CHECKLIST" ]; then
+        #   echo "Error: Not all ❌ checklist items are completed."
+        #   exit 1
+        # else
+        #   echo "✅ All required checkboxes are checked!"
+        # fi
+        
         # Define the required checkbox text
-        REQUIRED_CHECKBOXES=("Task 1" "Task 2")
+        # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
 
         # Check for each required checkbox
         # for TASK in "${REQUIRED_CHECKBOXES[@]}"; do
@@ -65,9 +81,6 @@ jobs:
         #     exit 1
         #   fi
         # done
-
-        # echo "✅ All required checkboxes are checked!"
-
 
     - name: Cache node modules
       uses: actions/cache@v3
