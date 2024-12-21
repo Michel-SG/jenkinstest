@@ -125,8 +125,10 @@ jobs:
       run: |
         echo ${{ needs.build.outputs.output1 }}
         if [ "${{ needs.build.outputs.output1 }}" == "false" ]; then
-          COMMENT_BODY="❌ Certaines cases ne sont pas cochées dans la checklist. Veuillez vérifier."
+          echo "Error: Not all ❌ checklist items are completed."
+          COMMENT_BODY="Not all ❌ checklist items are completed."
         else
-          COMMENT_BODY="✅ Toutes les cases sont cochées. PR prête pour la fusion."
+          echo "✅ All required checkboxes are checked!"
+          COMMENT_BODY="✅ All required checkboxes are checked!"
         fi
         gh pr comment ${{ github.event.pull_request.number }} --body "$COMMENT_BODY"
