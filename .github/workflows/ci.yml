@@ -119,7 +119,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Send notification to PR
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         if [ "${{ needs.build.checkboxes.outputs.success }}" == "false" ]; then
           COMMENT_BODY="❌ Certaines cases ne sont pas cochées dans la checklist. Veuillez vérifier."
