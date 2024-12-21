@@ -52,8 +52,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
-        # Get the PR body
-
+       
         if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
           echo "Error: Not all ❌ checklist items are completed."
           exit 1
