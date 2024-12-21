@@ -70,9 +70,9 @@ jobs:
         #   echo "✅ All required checkboxes are checked!"
         # fi
         
+
         # Define the required checkbox text
         # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
-
         # Check for each required checkbox
         # for TASK in "${REQUIRED_CHECKBOXES[@]}"; do
         #   if ! echo "$PR_BODY" | grep -qE "- \[x\] $TASK"; then
