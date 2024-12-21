@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.checkboxes.outputs.success }}
     env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
         A: ${{ toJson(github.event.pull_request) }}
@@ -52,13 +54,32 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
-       
-        if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
-          echo "Error: Not all ❌ checklist items are completed."
+        PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
+        if echo "$PR_BODY" | grep -q '\- \[ \]'; then
+          echo "❌ Certaines cases ne sont pas cochées dans la checklist."
+          echo "success=false" >> $GITHUB_OUTPUT
           exit 1
         else
           echo "✅ All required checkboxes are checked!"
+          echo "success=true" >> $GITHUB_OUTPUT
         fi
+          
+
+
+        # EXPECTED_SHA=${{ github.event.pull_request.head.sha }}
+        # if ! echo "$PR_BODY" | grep -q "$EXPECTED_SHA"; then
+        #   echo "❌ Le SHA dans la PR ne correspond pas au SHA actuel (${EXPECTED_SHA})."
+        #   exit 1
+        # fi
+        
+
+
+        # if grep -q '\- \[ \]' "$GITHUB_EVENT_PATH"; then
+        #   echo "Error: Not all ❌ checklist items are completed."
+        #   exit 1
+        # else
+        #   echo "✅ All required checkboxes are checked!"
+        # fi
 
         # PR_BODY=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }})
         
@@ -69,8 +90,8 @@ jobs:
         # else
         #   echo "✅ All required checkboxes are checked!"
         # fi
-  
-        
+
+
         # Define the required checkbox text
         # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
         # Check for each required checkbox
@@ -90,3 +111,24 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Dockerfile') }}
         restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
+
+  notify:
+    needs: build
+    if: always()  # S'exécute même si la validation échoue
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Send notification to PR
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+      run: |
+        echo ${{ needs.build.outputs.output1 }}
+        if [ "${{ needs.build.outputs.output1 }}" == "false" ]; then
+          echo "Error: Not all ❌ checklist items are completed."
+          COMMENT_BODY="Not all ❌ checklist items are completed."
+        else
+          echo "✅ All required checkboxes are checked!"
+          COMMENT_BODY="✅ All required checkboxes are checked!"
+        fi
+        gh pr comment ${{ github.event.pull_request.number }} --body "$COMMENT_BODY"
