@@ -69,6 +69,7 @@ jobs:
         # else
         #   echo "✅ All required checkboxes are checked!"
         # fi
+  
         
         # Define the required checkbox text
         # REQUIRED_CHECKBOXES=("Task 1" "Task 2")
