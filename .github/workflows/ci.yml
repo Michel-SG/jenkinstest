@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.checkboxes.outputs.success }}
     env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
         A: ${{ toJson(github.event.pull_request) }}
@@ -121,10 +123,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
-        echo ${{ needs.build.steps.checkboxes.outputs.success }}
-        if [ "${{ needs.build.steps.checkboxes.outputs.success }}" == "false" ]; then
+        echo ${{ needs.build.outputs.output1 }}
+        if [ "${{ needs.build.outputs.output1 }}" == "false" ]; then
           COMMENT_BODY="❌ Certaines cases ne sont pas cochées dans la checklist. Veuillez vérifier."
-        else if [ "${{ needs.build.steps.checkboxes.outputs.success }}" == "true" ];then
+        else if [ "${{ needs.build.outputs.output1 }}" == "true" ];then
           COMMENT_BODY="✅ Toutes les cases sont cochées. PR prête pour la fusion."
         fi
         gh pr comment ${{ github.event.pull_request.number }} --body "$COMMENT_BODY"
