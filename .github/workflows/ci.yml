@@ -115,7 +115,7 @@ jobs:
       id: validate
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        if echo "$PR_BODY" | grep -q "\- \[ \]"; then
+        if echo "$PR_BODY" | grep -q '\- \[ \]'; then
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1
         else
