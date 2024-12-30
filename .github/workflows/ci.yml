@@ -1,10 +1,7 @@
 name: Enforce PR checklist
 on: 
-  push:
-    branches:
-    - hello
-  # pull_request:
-  #   types: [opened, edited, reopened, synchronize]
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
 
@@ -47,25 +44,25 @@ jobs:
         echo $GITHUB_BASE_REF
       
     # Ajoutez un fichier README.md au dépôt
-    # - name: Add README.md
-    #   run: |
-    #     echo "# Bienvenue dans ce projet" > README.md
-    #     echo "Ce fichier a été ajouté automatiquement via une GitHub Action." >> README.md    
+    - name: Add README.md
+      run: |
+        echo "# Bienvenue dans ce projet" > README.md
+        echo "Ce fichier a été ajouté automatiquement via une GitHub Action." >> README.md    
     
-    # - name: Validate PR checkboxes
-    #   id: checkboxes
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
-    #   run: |
-    #     PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
-    #     if echo "$PR_BODY" | grep -q '\- \[ \]'; then
-    #       echo "❌ Certaines cases ne sont pas cochées dans la checklist."
-    #       echo "success=false" >> $GITHUB_OUTPUT
-    #       exit 1
-    #     else
-    #       echo "✅ All required checkboxes are checked!"
-    #       echo "success=true" >> $GITHUB_OUTPUT
-    #     fi
+    - name: Validate PR checkboxes
+      id: checkboxes
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+      run: |
+        PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
+        if echo "$PR_BODY" | grep -q '\- \[ \]'; then
+          echo "❌ Certaines cases ne sont pas cochées dans la checklist."
+          echo "success=false" >> $GITHUB_OUTPUT
+          exit 1
+        else
+          echo "✅ All required checkboxes are checked!"
+          echo "success=true" >> $GITHUB_OUTPUT
+        fi
           
 
 
