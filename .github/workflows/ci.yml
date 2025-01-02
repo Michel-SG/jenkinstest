@@ -122,7 +122,7 @@ jobs:
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1 
         fi
-        if echo "$PR_BODY" | grep -q '\- \Empty'; then
+        if echo "$PR_BODY" | grep -q '\- \Apache'; then
           echo "✅ Empty existe" 
         fi
       env:
