@@ -115,10 +115,10 @@ jobs:
       id: validate
       env: 
         GITHUB_EVENT_PATH: ${{ github.event_path }}
-        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
+        
         echo $PR_BODY
         if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
           echo "✅ All required checkboxes are checked!" 
@@ -129,14 +129,15 @@ jobs:
         
     - name: Valider la description de la PR
       env:
-        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
+        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
         if [[ "$PR_BODY" == *"Empty"* ]]; then
           echo "The text 'Empty' exists in the PR body."
-          echo "contains_empty_file=true" >> $GITHUB_ENV
+          
         else
           echo "The text 'Empty file' does not exist in the PR body."
-          echo "contains_empty_file=false" >> $GITHUB_ENV
+          
         fi
 
     - name: Generate 0 or 1
