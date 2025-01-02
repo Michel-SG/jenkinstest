@@ -12,6 +12,7 @@ jobs:
       output1: ${{ steps.checkboxes.outputs.success }}
     env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+        PR_BODY: $(jq -r '.pull_request.body' "${{ github.event_path }}")
         A: ${{ toJson(github.event.pull_request) }}
         B: ${{ github.event.pull_request.id }}
         C: ${{ github.event.pull_request.number }}
@@ -114,19 +115,24 @@ jobs:
     - name: Valider les cases cochées dans la description de la PR
       id: validate
       run: |
-        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        echo $PR_BODY
-        if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
+        
+        echo ${{ env.PR_BODY }}
+        if echo "${{ env.PR_BODY }}" | grep -q '\- \[x\] Mon code'; then
           echo "✅ All required checkboxes are checked!" 
         else
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1 
         fi
-        if echo "$PR_BODY" | grep -q '\- \Apache'; then
-          echo "✅ Empty existe" 
+
+    - name: Valider la description de la PR
+      run: |
+      
+        if echo "${{ env.PR_BODY }}" | grep -q '\- \Apache'; then
+          echo "✅ Empty esiste."
+        else
+          echo "Erreur : ça n'existe pas."
+          exit 1 
         fi
-      env:
-        GITHUB_EVENT_PATH: ${{ github.event_path }}
 
     - name: Cache node modules
       uses: actions/cache@v3
