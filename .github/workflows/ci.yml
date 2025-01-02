@@ -120,8 +120,10 @@ jobs:
           echo "✅ All required checkboxes are checked!" 
         else
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
-          exit 1
-          
+          exit 1 
+        fi
+        if echo "$PR_BODY" | grep -q '\- \Empty'; then
+          echo "✅ Empty existe" 
         fi
       env:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
