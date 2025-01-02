@@ -113,19 +113,43 @@ jobs:
         echo "$HOME/bin" >> $GITHUB_PATH
     - name: Valider les cases cochées dans la description de la PR
       id: validate
+      env: 
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+        
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
+        
         echo $PR_BODY
         if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
           echo "✅ All required checkboxes are checked!" 
         else
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
-          exit 1
-          
+          exit 1 
         fi
+        
+    - name: Valider la description de la PR
       env:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
+      run: |
+        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
+        if [[ "$PR_BODY" == *"Empty"* ]]; then
+          echo "The text 'Empty' exists in the PR body."
+          
+        else
+          echo "The text 'Empty file' does not exist in the PR body."
+          
+        fi
 
+    - name: Generate 0 or 1
+      id: generate_number
+      run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
+    - name: Pass or fail
+      run: |
+        if [[ ${{ steps.generate_number.outputs.random_number }} == 0 ]]; then 
+          exit 0; 
+        else 
+          exit 1; 
+        fi
     - name: Cache node modules
       uses: actions/cache@v3
       env:
