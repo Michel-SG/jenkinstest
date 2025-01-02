@@ -116,11 +116,12 @@ jobs:
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
         echo $PR_BODY
-        if echo "$PR_BODY" | grep -q '\- \[ \]'; then
+        if echo "$PR_BODY" | grep -q '\- \[ \] I have tested the code locally and it works as expected.'; then
+          echo "✅ All required checkboxes are checked!" 
+        else
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1
-        else
-          echo "✅ All required checkboxes are checked!"
+          
         fi
       env:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
