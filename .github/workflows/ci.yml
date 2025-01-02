@@ -131,11 +131,15 @@ jobs:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        if echo "$((PR_BODY))" | grep -q '\- \[ \]Empty'; then
-          echo "✅ Empty esiste."
+        COMMENT_BODY="Ceci est un commentaire de test" # Contenu à rechercher
+        MATCH=$(jq -r --arg BODY "$COMMENT_BODY" '.[] | select(.body == $BODY) | .id' $PR_BODY)
+
+        if [ -z "$MATCH" ]; then
+          echo "Comment not found."
+          echo "exists=false" >> $GITHUB_ENV
         else
-          echo "Erreur : ça n'existe pas."
-          exit 1 
+          echo "Comment found with ID: $MATCH"
+          echo "exists=true" >> $GITHUB_ENV
         fi
 
     - name: Generate 0 or 1
