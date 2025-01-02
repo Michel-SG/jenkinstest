@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.checkboxes.outputs.success }}
+      output_event: ${{ steps.validate.outputs.event_path }}
     env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
-        PR_BODY: $(jq -r '.pull_request.body' "${{ github.event_path }}")
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
         A: ${{ toJson(github.event.pull_request) }}
         B: ${{ github.event.pull_request.id }}
         C: ${{ github.event.pull_request.number }}
@@ -115,19 +116,21 @@ jobs:
     - name: Valider les cases cochées dans la description de la PR
       id: validate
       run: |
+        PR_BODY=$(jq -r '.pull_request.body' "${{ env.GITHUB_EVENT_PATH }}")
         
-        echo ${{ env.PR_BODY }}
-        if echo "${{ env.PR_BODY }}" | grep -q '\- \[x\] Mon code'; then
+        echo $PR_BODY
+        if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
           echo "✅ All required checkboxes are checked!" 
         else
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1 
         fi
-
+        echo "event_path=$PR_BODY" >> $GITHUB_OUTPUT
     - name: Valider la description de la PR
       run: |
-      
-        if echo "${{ env.PR_BODY }}" | grep -q '\- \Apache'; then
+        PR_BODY=${{ build.outputs.output_event }}
+
+        if echo "$PR_BODY" | grep -q '\- \Apache'; then
           echo "✅ Empty esiste."
         else
           echo "Erreur : ça n'existe pas."
