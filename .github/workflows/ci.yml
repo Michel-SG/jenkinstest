@@ -115,6 +115,7 @@ jobs:
       id: validate
       env: 
         GITHUB_EVENT_PATH: ${{ github.event_path }}
+        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
         echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
@@ -127,7 +128,8 @@ jobs:
         fi
         
     - name: Valider la description de la PR
-      
+      env:
+        GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
       run: |
         if [[ "$PR_BODY" == *"Empty"* ]]; then
           echo "The text 'Empty' exists in the PR body."
