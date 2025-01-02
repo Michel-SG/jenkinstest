@@ -49,20 +49,20 @@ jobs:
         echo "# Bienvenue dans ce projet" > README.md
         echo "Ce fichier a été ajouté automatiquement via une GitHub Action." >> README.md    
     
-    - name: Validate PR checkboxes
-      id: checkboxes
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
-      run: |
-        PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
-        if echo "$PR_BODY" | grep -q '\- \[ \]'; then
-          echo "❌ Certaines cases ne sont pas cochées dans la checklist."
-          echo "success=false" >> $GITHUB_OUTPUT
-          exit 1
-        else
-          echo "✅ All required checkboxes are checked!"
-          echo "success=true" >> $GITHUB_OUTPUT
-        fi
+    # - name: Validate PR checkboxes
+    #   id: checkboxes
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
+    #   run: |
+    #     PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q '.body')
+    #     if echo "$PR_BODY" | grep -q '\- \[ \]'; then
+    #       echo "❌ Certaines cases ne sont pas cochées dans la checklist."
+    #       echo "success=false" >> $GITHUB_OUTPUT
+    #       exit 1
+    #     else
+    #       echo "✅ All required checkboxes are checked!"
+    #       echo "success=true" >> $GITHUB_OUTPUT
+    #     fi
           
 
 
@@ -101,6 +101,30 @@ jobs:
         #     exit 1
         #   fi
         # done
+    
+    - name: Installer jq sans sudo
+      run: |
+        JQ_VERSION="1.6"
+        JQ_BINARY="jq-linux64"
+        curl -L -o jq "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/${JQ_BINARY}"
+        chmod +x jq
+        mkdir -p $HOME/bin
+        mv jq $HOME/bin/
+        echo "$HOME/bin" >> $GITHUB_PATH
+    - name: Valider les cases cochées dans la description de la PR
+      id: validate
+      run: |
+        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
+        echo $PR_BODY
+        if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
+          echo "✅ All required checkboxes are checked!" 
+        else
+          echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
+          exit 1
+          
+        fi
+      env:
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
 
     - name: Cache node modules
       uses: actions/cache@v3
