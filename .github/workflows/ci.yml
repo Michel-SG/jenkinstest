@@ -127,15 +127,27 @@ jobs:
         fi
         
     - name: Valider la description de la PR
+      env: 
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
-      
-        if echo "${{ steps.validate.outputs.event1_path }}" | grep -q '\- \Apache'; then
+        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
+        if echo "$PR_BODY" | grep -q '\- \Apache'; then
           echo "✅ Empty esiste."
         else
           echo "Erreur : ça n'existe pas."
           exit 1 
         fi
 
+    - name: Generate 0 or 1
+      id: generate_number
+      run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
+    - name: Pass or fail
+      run: |
+        if [[ ${{ steps.generate_number.outputs.random_number }} == 0 ]]; then 
+          exit 0; 
+        else 
+          exit 1; 
+        fi
     - name: Cache node modules
       uses: actions/cache@v3
       env:
