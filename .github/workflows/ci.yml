@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.checkboxes.outputs.success }}
-      output_event: ${{ steps.validate.outputs.event_path }}
     env:
         GH_TOKEN: ${{ secrets.TOCKEN_REGISTRY }}
-        GITHUB_EVENT_PATH: ${{ github.event_path }}
         A: ${{ toJson(github.event.pull_request) }}
         B: ${{ github.event.pull_request.id }}
         C: ${{ github.event.pull_request.number }}
@@ -115,8 +113,10 @@ jobs:
         echo "$HOME/bin" >> $GITHUB_PATH
     - name: Valider les cases cochées dans la description de la PR
       id: validate
+      env: 
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
-        PR_BODY=$(jq -r '.pull_request.body' "${{ env.GITHUB_EVENT_PATH }}")
+        PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
         
         echo $PR_BODY
         if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
