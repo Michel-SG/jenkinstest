@@ -125,10 +125,10 @@ jobs:
           echo "Erreur : Certaines cases de la checklist ne sont pas cochées."
           exit 1 
         fi
-        echo "event_path=$PR_BODY" >> $GITHUB_OUTPUT
+        echo "event1_path=$PR_BODY" >> $GITHUB_OUTPUT
     - name: Valider la description de la PR
       run: |
-        PR_BODY=${{ steps.validate.outputs.event_path }}
+        PR_BODY=${{ steps.validate.outputs.event1_path }}
 
         if echo "$PR_BODY" | grep -q '\- \Apache'; then
           echo "✅ Empty esiste."
