@@ -128,7 +128,7 @@ jobs:
         echo "event_path=$PR_BODY" >> $GITHUB_OUTPUT
     - name: Valider la description de la PR
       run: |
-        PR_BODY=${{ build.steps.validate.outputs.output_event }}
+        PR_BODY=${{ steps.validate.outputs.output_event }}
 
         if echo "$PR_BODY" | grep -q '\- \Apache'; then
           echo "✅ Empty esiste."
