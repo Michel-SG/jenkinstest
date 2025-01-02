@@ -117,7 +117,7 @@ jobs:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        echo "event1_path=$PR_BODY" >> $GITHUB_OUTPUT
+        
         echo $PR_BODY
         if echo "$PR_BODY" | grep -q '\- \[x\] Mon code'; then
           echo "✅ All required checkboxes are checked!" 
