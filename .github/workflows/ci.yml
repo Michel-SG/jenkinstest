@@ -131,7 +131,7 @@ jobs:
         GITHUB_EVENT_PATH: ${{ github.event_path }}
       run: |
         PR_BODY=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH")
-        if echo "$((PR_BODY))" | grep -q '\- \Empty'; then
+        if echo "$((PR_BODY))" | grep -q '\- \[ \]Empty'; then
           echo "✅ Empty esiste."
         else
           echo "Erreur : ça n'existe pas."
